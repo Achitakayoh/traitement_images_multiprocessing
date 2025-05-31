@@ -10,6 +10,7 @@ Cette mini-application permet de traiter des images depuis une interface graphiq
 - Résultats nommés selon le format : `processed_<outil>_<nomimage>.jpg`
 
 ## Structure du projet
+```
 traitement_images_ui/
 ├── main.py
 ├── utils.py
@@ -18,6 +19,7 @@ traitement_images_ui/
 ├── README.md
 ├── input/ # temporaire (vidé à chaque traitement)
 └── output/ # images traitées
+```
 
 ## Installation
 ```bash
