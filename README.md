@@ -34,6 +34,11 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
+## Lancer les tests unitaires
+```bash
+pytest
+```
+
 ## Utilisation
 ```bash
 python main.py
@@ -55,8 +60,9 @@ python main.py
 ## Remarques
 - Le dossier `input/` est recréé à chaque session et sert de tampon pour les fichiers nettoyés.
 - Le projet est conçu pour évoluer facilement : il est possible d'ajouter de nouveaux traitements ou interfaces sans casser la logique centrale.
+- Des tests unitaires automatiques sont en place pour `core/utils.py` avec `pytest` (voir dossier `tests/`).
 
 ## À venir (facultatif)
 - Ajout d’un fichier `.config.json` pour conserver les préférences entre sessions
 - Mode sombre / clair automatique selon l'OS
-- Tests unitaires pour `core/utils.py`
+- Tests unitaires pour `core/utils.py` (déjà en place)

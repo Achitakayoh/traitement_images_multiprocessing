@@ -5,6 +5,7 @@ venv/
 # Dossiers de fichiers d'entrée/sortie
 input/
 output/
+tests/test_files/
 
 # Fichiers temporaires système
 .DS_Store
