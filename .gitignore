@@ -1,0 +1,28 @@
+# Environnement virtuel
+.venv/
+venv/
+
+# Dossiers de fichiers d'entrée/sortie
+input/
+output/
+
+# Fichiers temporaires système
+.DS_Store
+Thumbs.db
+
+# Cache Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Fichiers log ou de debug éventuels
+*.log
+
+# Fichiers IDE (VSCode, PyCharm...)
+.vscode/
+.idea/
+
+# Configuration spécifique système
+*.swp
+*.bak
+*.tmp

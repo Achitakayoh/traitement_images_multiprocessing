@@ -1,0 +1,1 @@
+# Fonctions de traitement (grayscale, rotation, etc.)
