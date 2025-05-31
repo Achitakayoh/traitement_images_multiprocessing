@@ -1,26 +1,30 @@
 # Traitement d'images avec interface graphique
 
-Cette mini-application permet de traiter des images depuis une interface graphique épurée.
+Cette application permet de traiter des images à partir d'une interface graphique moderne et modulaire, inspirée du style Apple.
 
 ## Fonctionnalités
-- Interface Tkinter organisée en étapes claires
+- Interface graphique construite avec `ttkbootstrap` pour un style moderne
+- Architecture modulaire avec séparation claire : interface (`gui/`), logique (`core/`), config
 - Nettoyage automatique des noms de fichiers (accents, espaces, caractères spéciaux)
 - Gestion des doublons (ajout _1, _2... si nécessaire)
 - Application de traitements image avec `Pillow`
 - Résultats nommés selon le format : `processed_<outil>_<nomimage>.jpg`
-- Mémoire du dernier dossier d’entrée et de sortie utilisé pendant la session
-- Option d'ouverture automatique du dossier une fois le traitement terminé
+- Mémoire du dernier dossier d’entrée et de sortie pendant la session
+- Option d'ouverture automatique du dossier après traitement
 
 ## Structure du projet
 ```
 traitement_images_ui/
-├── main.py                # Interface utilisateur
-├── utils.py               # Nettoyage des noms et gestion des fichiers
-├── traitement.py          # Fonctions de transformation des images
+├── gui/
+│   └── app.py                 # Interface utilisateur (ttkbootstrap)
+├── core/
+│   ├── utils.py              # Nettoyage, validation, copie des fichiers
+│   ├── traitement.py         # Fonctions de traitement d'image
+│   └── config.py             # Constantes et configuration centrale
+├── input/                    # Dossier temporaire nettoyé à chaque traitement
+├── main.py                   # Point d'entrée unique de l'application
 ├── requirements.txt
-├── README.md
-├── input/                 # Temporaire (vidé automatiquement à chaque traitement)
-└── (destination personnalisée sélectionnée à chaque fois)
+└── README.md
 ```
 
 ## Installation
@@ -35,15 +39,24 @@ pip install -r requirements.txt
 python main.py
 ```
 
-## Étapes d'utilisation dans l'application
-1. **Sélectionnez les images à traiter** via un bouton de navigation
-2. **Choisissez le dossier de destination** où les images seront enregistrées
-3. **Sélectionnez le traitement** à appliquer (grayscale, rotation, etc.)
-4. Cliquez sur **Lancer le traitement**
+## Étapes dans l'application
+1. **Sélectionner les images** à traiter
+2. **Choisir le dossier de destination** pour les images traitées
+3. **Sélectionner un traitement** (grayscale, rotation, etc.)
+4. **Lancer le traitement**
 
-L’application affiche des résumés dynamiques (ex. : "3 fichier(s) : image1.jpg, image2.jpg, ...") et propose d’ouvrir le dossier de sortie automatiquement après traitement.
+## Traitements disponibles
+- Niveau de gris
+- Rotation 90°
+- Redimensionnement à 50%
+- Inversion des couleurs
+- Flou léger
 
 ## Remarques
-- Les fichiers traités sont toujours enregistrés dans le dossier sélectionné par l'utilisateur.
-- Les fichiers temporaires nettoyés sont stockés dans le dossier `input/`, vidé à chaque lancement.
-- Pour l’instant, la mémoire des derniers chemins est maintenue pendant la session uniquement.
+- Le dossier `input/` est recréé à chaque session et sert de tampon pour les fichiers nettoyés.
+- Le projet est conçu pour évoluer facilement : il est possible d'ajouter de nouveaux traitements ou interfaces sans casser la logique centrale.
+
+## À venir (facultatif)
+- Ajout d’un fichier `.config.json` pour conserver les préférences entre sessions
+- Mode sombre / clair automatique selon l'OS
+- Tests unitaires pour `core/utils.py`

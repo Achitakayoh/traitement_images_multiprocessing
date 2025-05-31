@@ -1,8 +1,8 @@
-# Nettoyage des noms de fichiers, gestion des doublonsimport os
 import os
 import shutil
 import unicodedata
 import re
+from core import config
 
 def clean_filename(filename):
     name, ext = os.path.splitext(filename)
@@ -35,3 +35,11 @@ def clean_and_copy_files(filepaths, target_dir):
         cleaned_files.append(final_name)
 
     return cleaned_files
+
+def is_valid_file(path):
+    ext = os.path.splitext(path)[1].lower()
+    abs_path = os.path.abspath(path)
+    return (
+        ext in config.ALLOWED_EXTENSIONS and
+        not any(abs_path.startswith(s) for s in config.SENSITIVE_PATHS)
+    )
