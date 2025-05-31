@@ -1,9 +1,9 @@
-import tkinter as tk
-from tkinter import filedialog, ttk, messagebox
-import shutil
 import os
 import subprocess
 import platform
+import ttkbootstrap as ttk
+from ttkbootstrap.constants import *
+from tkinter import filedialog, messagebox
 from utils import clean_and_copy_files
 from traitement import apply_treatment, TREATMENTS
 
@@ -11,22 +11,15 @@ INPUT_DIR = 'input'
 ALLOWED_EXTENSIONS = ('.jpg', '.jpeg', '.png', '.bmp', '.gif')
 SENSITIVE_PATHS = ['C:\\Windows', '/etc', '/bin', '/usr']
 
-# Mémoires locales
 last_input_dir = os.path.expanduser('~/Downloads')
 last_output_dir = os.path.expanduser('~/')
-
 selected_files = []
 selected_output_dir = ""
-
 
 def is_valid_file(path):
     ext = os.path.splitext(path)[1].lower()
     abs_path = os.path.abspath(path)
-    return (
-        ext in ALLOWED_EXTENSIONS and
-        not any(abs_path.startswith(s) for s in SENSITIVE_PATHS)
-    )
-
+    return ext in ALLOWED_EXTENSIONS and not any(abs_path.startswith(s) for s in SENSITIVE_PATHS)
 
 def open_folder(path):
     try:
@@ -38,7 +31,6 @@ def open_folder(path):
             subprocess.Popen(["xdg-open", path])
     except Exception as e:
         messagebox.showerror("Erreur", f"Impossible d'ouvrir le dossier : {e}")
-
 
 def select_input_files():
     global selected_files, last_input_dir
@@ -55,7 +47,6 @@ def select_input_files():
             short_list += ", ..."
         input_label.config(text=f"{len(selected_files)} fichier(s) : {short_list}")
 
-
 def select_output_directory():
     global selected_output_dir, last_output_dir
     folder = filedialog.askdirectory(title="Choisir le dossier de destination", initialdir=last_output_dir)
@@ -63,7 +54,6 @@ def select_output_directory():
         last_output_dir = folder
         selected_output_dir = folder
         output_label.config(text=f"Dossier : {selected_output_dir}")
-
 
 def launch_processing():
     if not selected_files:
@@ -92,44 +82,29 @@ def launch_processing():
     except Exception as e:
         messagebox.showerror("Erreur", f"Une erreur est survenue : {e}")
 
-
-# Interface graphique
-root = tk.Tk()
-root.title("Traitement d'images")
-root.geometry("500x320")
+# Interface avec ttkbootstrap
+root = ttk.Window(themename="flatly")
+root.title("🖼️ Traitement d'images")
+root.geometry("500x340")
 root.resizable(False, False)
-root.option_add("*Font", ("Segoe UI", 10))
 
-main_frame = tk.Frame(root, padx=20, pady=10)
-main_frame.pack(fill="both", expand=True)
+main_frame = ttk.Frame(root, padding=20)
+main_frame.pack(fill=BOTH, expand=True)
 
-# Étape 1 - Fichiers à traiter
-step1_label = tk.Label(main_frame, text="Étape 1 - Sélection des images", font=("Segoe UI", 10, "bold"))
-step1_label.grid(row=0, column=0, sticky="w", pady=(0, 5))
+ttk.Label(main_frame, text="Étape 1 - Sélection des images", font=("Segoe UI", 10, "bold")).pack(anchor=W, pady=(0, 5))
+ttk.Button(main_frame, text="📁 Parcourir…", command=select_input_files, bootstyle="primary").pack(anchor=W)
+input_label = ttk.Label(main_frame, text="Aucun fichier sélectionné")
+input_label.pack(anchor=W, pady=(0, 15))
 
-input_button = tk.Button(main_frame, text="Parcourir...", command=select_input_files)
-input_button.grid(row=1, column=0, sticky="w")
-input_label = tk.Label(main_frame, text="Aucun fichier sélectionné", anchor="w")
-input_label.grid(row=1, column=1, sticky="w", padx=(10, 0))
+ttk.Label(main_frame, text="Étape 2 - Dossier de destination", font=("Segoe UI", 10, "bold")).pack(anchor=W, pady=(0, 5))
+ttk.Button(main_frame, text="📂 Choisir le dossier", command=select_output_directory, bootstyle="info").pack(anchor=W)
+output_label = ttk.Label(main_frame, text="Aucun dossier sélectionné")
+output_label.pack(anchor=W, pady=(0, 15))
 
-# Étape 2 - Dossier de sortie
-step2_label = tk.Label(main_frame, text="\nÉtape 2 - Dossier de destination", font=("Segoe UI", 10, "bold"))
-step2_label.grid(row=2, column=0, sticky="w", pady=(10, 5))
+ttk.Label(main_frame, text="Étape 3 - Type de traitement", font=("Segoe UI", 10, "bold")).pack(anchor=W, pady=(0, 5))
+combo = ttk.Combobox(main_frame, values=list(TREATMENTS.keys()), state="readonly", width=35)
+combo.pack(anchor=W, pady=(0, 20))
 
-output_button = tk.Button(main_frame, text="Choisir le dossier", command=select_output_directory)
-output_button.grid(row=3, column=0, sticky="w")
-output_label = tk.Label(main_frame, text="Aucun dossier sélectionné", anchor="w")
-output_label.grid(row=3, column=1, sticky="w", padx=(10, 0))
-
-# Étape 3 - Choix du traitement
-step3_label = tk.Label(main_frame, text="\nÉtape 3 - Type de traitement", font=("Segoe UI", 10, "bold"))
-step3_label.grid(row=4, column=0, sticky="w", pady=(10, 5))
-
-combo = ttk.Combobox(main_frame, values=list(TREATMENTS.keys()), state="readonly", width=30)
-combo.grid(row=5, column=0, columnspan=2, sticky="w")
-
-# Bouton final
-process_button = tk.Button(root, text="Lancer le traitement", command=launch_processing, font=("Segoe UI", 10, "bold"))
-process_button.pack(pady=15)
+ttk.Button(main_frame, text="▶ Lancer le traitement", command=launch_processing, bootstyle="success").pack(anchor=CENTER)
 
 root.mainloop()
