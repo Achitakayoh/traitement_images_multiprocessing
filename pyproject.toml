@@ -1,0 +1,23 @@
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+exclude = [
+  ".venv",
+  "__pycache__",
+  "input",
+  "output",
+  "build",
+  "dist"
+]
+fix = true
+
+[tool.ruff.lint]
+select = [
+  "E",    # Style (pycodestyle)
+  "F",    # Erreurs de logique (pyflakes)
+  "I",    # Tri des imports (isort)
+  "B",    # Pièges courants (bugbear)
+  "UP",   # Modernisation (pyupgrade)
+  "S",    # Sécurité (bandit)
+  "C90"   # Complexité (mccabe)
+]
