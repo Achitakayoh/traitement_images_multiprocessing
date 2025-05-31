@@ -157,10 +157,14 @@ class ImageApp:
                 # S603/S607: usage contrôlé, chemin local, pas d'entrée utilisateur
                 import subprocess
 
-                subprocess.run(["xdg-open", os.path.abspath(path)], check=False)  # noqa: S603, S607
+                subprocess.run(
+                    ["xdg-open", os.path.abspath(path)], check=False
+                )  # noqa: S603, S607
             elif os.name == "mac":
                 import subprocess
 
-                subprocess.run(["open", os.path.abspath(path)], check=False)  # noqa: S603, S607
+                subprocess.run(
+                    ["open", os.path.abspath(path)], check=False
+                )  # noqa: S603, S607
         except Exception as e:
             messagebox.showerror("Erreur", f"Impossible d'ouvrir le dossier : {e}")  # type: ignore

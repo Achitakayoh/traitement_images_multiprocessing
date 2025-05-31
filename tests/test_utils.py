@@ -19,8 +19,10 @@ def test_clean_filename() -> None:
 
 def test_clean_and_copy_files(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(utils, "config", DummyConfig)
-    with tempfile.TemporaryDirectory() as src_dir, \
-            tempfile.TemporaryDirectory() as dst_dir:
+    with (
+        tempfile.TemporaryDirectory() as src_dir,
+        tempfile.TemporaryDirectory() as dst_dir,
+    ):
         filenames = ["imâge testé.png", "imâge testé.png", "fichier@#éè!.jpg"]
         src_files: list[str] = []
         for name in filenames:

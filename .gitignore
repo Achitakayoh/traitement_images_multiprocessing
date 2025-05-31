@@ -27,3 +27,6 @@ __pycache__/
 *.swp
 *.bak
 *.tmp
+
+# Stubs et typage local
+typings/

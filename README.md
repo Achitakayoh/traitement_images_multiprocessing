@@ -34,6 +34,23 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
+## Linting et formatage du code
+
+Le projet utilise **Ruff** (linter + formateur ultra-rapide) et **Pylance** (analyseur de type VS Code) pour garantir la qualité et la modernité du code Python.
+
+- **Lint & auto-fix** :
+  ```bash
+  ruff check . --fix
+  ```
+- **Formatage du code** :
+  ```bash
+  ruff format .
+  ```
+- **Analyse de type** :
+  Pylance est activé automatiquement dans VS Code (aucune commande à lancer).
+
+La configuration stricte de Ruff se trouve dans `pyproject.toml`.
+
 ## Lancer les tests unitaires
 ```bash
 pytest

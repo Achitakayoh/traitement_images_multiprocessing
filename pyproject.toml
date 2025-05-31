@@ -21,3 +21,9 @@ select = [
   "S",    # Sécurité (bandit)
   "C90"   # Complexité (mccabe)
 ]
+
+[tool.ruff.format]
+quote-style = "double"        # ou "single" si tu préfères les simples quotes
+indent-style = "space"
+line-ending = "auto"          # ou "lf" / "crlf"
+skip-magic-trailing-comma = false
